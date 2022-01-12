@@ -4,7 +4,7 @@ const CelebrityModel = require("./../models/Celebrity.model");
 
 
 //Celebrities list
-router.get("/celebrities-list", (req, res, next) => {
+router.get("/", (req, res, next) => {
   CelebrityModel.find()
     .then((celebs) => {
       res.render("celebrities/celebrities", { celebs })
@@ -18,15 +18,14 @@ router.get("/create", (req, res, next) => {
 });
 
 router.post("/create", async (req, res, next) => {
-  const newCelebrity = {
-    name: req.body.name,
-    occupation: req.body.occupation,
-    catchPhrase: req.body.catchPhrase
-  }
-
   try {
+    const newCelebrity = {
+      name: req.body.name,
+      occupation: req.body.occupation,
+      catchPhrase: req.body.catchPhrase
+    }
     await CelebrityModel.create(newCelebrity);
-    res.redirect("/celebrities-list");
+    res.redirect("/celebrities");
   } catch (err) {
     next(err);
   }
